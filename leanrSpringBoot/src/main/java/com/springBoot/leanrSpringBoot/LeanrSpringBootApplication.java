@@ -13,7 +13,7 @@ public class LeanrSpringBootApplication {
 
 	}
 }
-
+// fiest pshae
 // note --> so what we did we generate a project from spring io start and there we add web dependency
 // by searching web , web dependency is used to create web api it will give you tomcat dependency  in pom file by default
 
@@ -31,3 +31,11 @@ public class LeanrSpringBootApplication {
 // management.endpoints.web.exposure.include =* to expose all the end point
 // management.endpoints.web.exposure.include = health,matrix // to enable specific one and it is recommended
 // in matrix you can see how many request are made by clients
+
+// second phase
+// to talk to with database we need a dependency spring boot data jpa
+// to use H2 as our database we need to use com.H2 dependency
+// now configure database in application.properties
+// we can make file data.sql for entry i our data base this is script which runs when we start
+// application but for that we need to do configuration in application.properties that it should run once
+// jpa makes schema
