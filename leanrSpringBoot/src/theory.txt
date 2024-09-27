@@ -1,0 +1,65 @@
+Spring boot -->
+Spring boot magic --> it will do auto configuration for you by default it will scan then
+current package
+follow LearnSpringBootApplications
+
+How db connection is making -->
+In Spring Boot, the process of establishing a database connection involves several automatic configurations happening under the hood.
+
+When you add dependencies like spring-boot-starter-data-jpa and the MySQL connector,
+you're essentially adding the required drivers and libraries to enable your Spring Boot application to communicate with the database.
+first add dependency -->
+spring-boot-starter-data-jpa Dependency:
+when you include spring-boot-starter-data-jpa, you're bringing in Spring Data JPA,
+which in turn uses JPA (with Hibernate as the default implementation) behind the scenes.
+This dependency is specifically for JPA (Java Persistence API).
+It brings in all the necessary components to integrate JPA into
+your Spring Boot application, including Hibernate as the default JPA provider.
+
+MySQL Connector Dependency: Since you're using MySQL as your database, you also need the MySQL JDBC driver to allow your
+ Spring Boot application to communicate with the MySQL database.
+ To do that, you should include the MySQL Connector dependency in your pom.xml.
+
+1. Auto-Configuration via spring-boot-starter-data-jpa
+When you include spring-boot-starter-data-jpa in your project,
+Spring Boot automatically configures the necessary beans for working with JPA and database connections.
+It scans your application.properties or application.yml file for database configuration and sets up everything for you.
+
+Key classes involved:
+DataSourceAutoConfiguration: Automatically configures a DataSource bean (which manages the connection pool to the database).
+JpaBaseConfiguration: Configures Hibernate as the default JPA provider (other JPA providers can be used too).
+
+2. Reading Configuration Properties
+Spring Boot reads the properties you've set in the application.properties or application.yml file, such as:
+spring.datasource.url=jdbc:mysql://localhost:3306/your_database
+spring.datasource.username=root
+spring.datasource.password=your_password
+These values are used to create and configure a DataSource bean, which is responsible for managing connections to the database.
+
+3. Creating a DataSource Bean
+Spring Boot uses the DataSourceAutoConfiguration class to create a DataSource bean automatically.
+The DataSource is responsible for establishing and managing the actual database connections.
+It uses your connection URL, username, password, and other properties to set up a connection pool.
+
+The DataSource is a standard Java interface for managing a pool of database connections.
+Spring uses libraries like HikariCP as the default connection pool provider in most cases.
+Example flow:
+Spring reads your database configuration.
+A DataSource object is created.
+The DataSource object uses the URL, username, and password to connect to the database.
+
+4. Setting Up EntityManager and Transaction Management
+Once the DataSource is set up, Spring Boot configures the JPA EntityManagerFactory and TransactionManager:
+
+EntityManagerFactory: This is used by Spring to manage the persistence context (the environment for entity management). It handles interactions with the database using JPA/Hibernate.
+TransactionManager: This manages database transactions, ensuring data consistency and rolling back transactions in case of failure.
+Spring Boot configures these automatically based on the JPA settings in application.properties.
+
+5. Repository Interaction (using JpaRepository)
+When you create a repository that extends JpaRepository, Spring Data JPA provides you with default CRUD methods (like findAll(), save(), etc.). When you call any of these methods:
+
+Spring uses the EntityManager to interact with the database through the DataSource connection.
+The underlying JPA provider (e.g., Hibernate) generates the necessary SQL queries and sends them
+
+look what if you have more tables then how you will be able to access them -->
+for each you have to make a repository(interface) and need to extend JpaRepository and need to pass the entity
